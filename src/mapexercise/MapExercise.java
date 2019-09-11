@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package mapexercise;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -19,27 +19,26 @@ public class MapExercise {
      */
     public static void main(String[] args) {
 
-        //The Firest Map Object
-      Map<String, String> presidentPays = new HashMap<String, String>();
-        //add key-value pair to hashmap
-        presidentPays.put("Thisekedi", "Congo DRC");
-        presidentPays.put("Kagame", "Rwanda");
-        presidentPays.put("Magufuli","Tanzanie");
-        presidentPays.put("Museveni","Ouganda");
-        presidentPays.put("Kenyata","Kenya");
-        
-       // The Seconde Map Object
-        Map<String, String> paysCapital = new HashMap<String, String>();
-        paysCapital.put("Congo DRC", "Kinshasa");
-        paysCapital.put("Rwanda", "Kigali");
-        paysCapital.put("Tanzanie", "Dar-es-salam");
-        paysCapital.put("Ouganda", "Kampala");
-        paysCapital.put("Kenya", "Nairobi");
-       
-        //Copy Of The First Map In The Second
-        presidentPays.putAll(paysCapital);
-        System.out.println(presidentPays);
-        
-    }
-    
+    Map<String, List<String>> map = new HashMap<>();
+
+    put(map, "Congo DRC", "Thisekedi");
+    put(map, "Congo DRC", "kinshasa");
+    put(map, "Rwanda",    "Kagame");
+    put(map, "Rwanda",    "Kigali");
+    put(map, "Tanzanie",  "Magufuli" );
+    put(map, "Tanzanie",  "Dar-es-salam" );
+    put(map, "Ouganda",   "Museveni");
+    put(map, "Ouganda",   "kampala");
+      
+
+    map.forEach((s, strings) -> {
+        System.out.print(s + ": " + " - " );
+        System.out.println(strings.stream().collect(Collectors.joining(", " + "\n" +  "         " +  " - ")) + "\n");
+    });
+}
+
+private static <KEY, VALUE> void put(Map<KEY, List<VALUE>> map, KEY key, VALUE value) {
+    map.compute(key, (s, strings) -> strings == null ? new ArrayList<>() : strings).add(value);
+
+      }
 }
